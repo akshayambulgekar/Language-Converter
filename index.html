@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px 0;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Convert Text to Greetings</h1>
+
+        <label for="language">Choose a language:</label>
+        <select id="language">
+            <option value="English">English</option>
+            <option value="French">French</option>
+            <option value="Hindi">Hindi</option>
+        </select>
+
+        <label for="text">Enter text:</label>
+        <input type="text" id="text" placeholder="Enter Hello">
+
+        <button onclick="convertText()">Convert</button>
+
+        <h2 id="message"></h2>
+    </div>
+
+    <script>
+        async function convertText() {
+            const language = document.getElementById("language").value;
+            const text = document.getElementById("text").value;
+            
+            try {
+                const response = await fetch(`http://localhost:5000/hello?language=${language}&text=${text}`);
+                const data = await response.json();
+                document.getElementById("message").innerText = data.message;
+            } catch (error) {
+                console.error('Error fetching message:', error);
+            }
+        }
+    </script>
+</body>
+</html>
